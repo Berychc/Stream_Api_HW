@@ -3,16 +3,16 @@ package com.StreamApi.demo;
 import java.util.Objects;
 
 public class Employee {
-    private int departament;
+    private int department;
     private int salary;
 
-    public Employee(int departament, int salary) {
-        this.departament = departament;
+    public Employee(int department, int salary) {
+        this.department = department;
         this.salary = salary;
     }
 
     public int getDepartament() {
-        return departament;
+        return department;
     }
 
     public int getSalary() {
@@ -20,8 +20,8 @@ public class Employee {
 
     }
 
-    public void setDepartament(int departament) {
-        this.departament = departament;
+    public void setDepartment(int departament) {
+        this.department = departament;
     }
 
     public void setSalary(int salary) {
