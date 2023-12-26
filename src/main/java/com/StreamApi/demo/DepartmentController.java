@@ -13,25 +13,25 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/departaments")
-public class DepartamentController {
+@RequestMapping("/departments")
+public class DepartmentController {
 
     private final EmployeeService employeeService;
 
-    public DepartamentController(EmployeeService employeeService) {
+    public DepartmentController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @GetMapping("/max-salary")
-    public Employee getEmployeeWithMaxSalary(@RequestParam("departamentId") int departamentId) {
+    public Employee getEmployeeWithMaxSalary(@RequestParam("departmentId") int departmentId) {
         return employeeService.getAllEmployees().stream()
-                .filter(employee -> employee.getDepartament() == departamentId)
+                .filter(employee -> employee.getDepartament() == departmentId)
                 .max(Comparator.comparing(Employee::getSalary))
                 .orElseThrow();
     }
 
     @GetMapping("/min-salary")
-    public Employee getEmployeeWithMinSalary(@RequestParam("departamentId") int departmentId) {
+    public Employee getEmployeeWithMinSalary(@RequestParam("departmentId") int departmentId) {
         return employeeService.getAllEmployees().stream()
                 .filter(employee -> employee.getDepartament() == departmentId)
                 .min(Comparator.comparingInt(Employee::getSalary))
@@ -49,7 +49,7 @@ public class DepartamentController {
         return employeeStream.collect(Collectors.toList());
     }
 
-    @GetMapping("/all")
+    @GetMapping("/allEmployees")
     public Map<Integer, List<Employee>> getAllEmployeesGrouped() {
         return employeeService.getAllEmployees().stream()
                 .collect(Collectors.groupingBy(Employee::getDepartament));
