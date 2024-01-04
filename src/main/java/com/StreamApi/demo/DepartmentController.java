@@ -18,40 +18,27 @@ public class DepartmentController {
 
     private final EmployeeService employeeService;
 
-    public DepartmentController(EmployeeService employeeService) {
+    public DepartmentController(EmployeeService employeeService)        {
         this.employeeService = employeeService;
     }
 
     @GetMapping("/max-salary")
-    public Employee getEmployeeWithMaxSalary(@RequestParam("departmentId") int departmentId) {
-        return employeeService.getAllEmployees().stream()
-                .filter(employee -> employee.getDepartament() == departmentId)
-                .max(Comparator.comparing(Employee::getSalary))
-                .orElseThrow();
+    public Employee findEmployeeWithMaxSalary(@RequestParam("departmentId") int departmentId) {
+        return employeeService.getEmployeeWithMaxSalary(departmentId);
     }
 
     @GetMapping("/min-salary")
-    public Employee getEmployeeWithMinSalary(@RequestParam("departmentId") int departmentId) {
-        return employeeService.getAllEmployees().stream()
-                .filter(employee -> employee.getDepartament() == departmentId)
-                .min(Comparator.comparingInt(Employee::getSalary))
-                .orElseThrow();
+    public Employee findEmployeeWithMinSalary(@RequestParam("departmentId") int departmentId) {
+        return employeeService.getEmployeeWithMinSalary(departmentId);
     }
 
     @GetMapping("/all")
-    public List<Employee> getAllEmployees(@RequestParam(required = false) Integer departmentId) {
-        Stream<Employee> employeeStream = employeeService.getAllEmployees().stream();
-
-        if (departmentId != null) {
-            employeeStream = employeeStream.filter(employee -> employee.getDepartament() == departmentId);
-        }
-
-        return employeeStream.collect(Collectors.toList());
+    public List<Employee> findAllEmployees(@RequestParam(required = false) Integer departmentId) {
+        return employeeService.getAllEmployees(departmentId);
     }
 
     @GetMapping("/allEmployees")
-    public Map<Integer, List<Employee>> getAllEmployeesGrouped() {
-        return employeeService.getAllEmployees().stream()
-                .collect(Collectors.groupingBy(Employee::getDepartament));
+    public Map<Integer, List<Employee>> findAllEmployeesGrouped() {
+        return employeeService.getAllEmployeesGrouped();
     }
 }
